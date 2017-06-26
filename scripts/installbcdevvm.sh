@@ -3,9 +3,9 @@
 # print commands and arguments as they are executed
 set -x
 
-echo "starting ubuntu devbox install on pid $$"
+echo "Start setup"
+echo "starting ubuntu blockchain devbox install on pid $$"
 date
-ps axjf
 
 #############
 # Parameters
@@ -14,7 +14,6 @@ ps axjf
 AZUREUSER=$1
 HOMEDIR="/home/$AZUREUSER"
 VMNAME=$2
-PSWD=$3
 echo "User: $AZUREUSER"
 echo "User home dir: $HOMEDIR"
 echo "vmname: $VMNAME"
@@ -93,7 +92,7 @@ echo "vncserver -kill :1" | sudo tee $HOMEDIR/bin/stopvnc
 echo "export PATH=\$PATH:~/bin" | sudo tee -a $HOMEDIR/.bashrc
 
 prog=/usr/bin/vncpasswd
-mypass=PSWD
+mypass=$3
 
 sudo -i -u $AZUREUSER /usr/bin/expect <<EOF
 spawn "$prog"
@@ -160,3 +159,4 @@ date
 
 # end of install
 echo "completed ubuntu devbox install on pid $$"
+echo "Setup Complete"
