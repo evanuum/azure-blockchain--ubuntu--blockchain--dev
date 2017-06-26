@@ -13,7 +13,7 @@ ps axjf
 
 AZUREUSER=$1
 HOMEDIR="/home/$AZUREUSER"
-VMNAME=`hostname`
+VMNAME=$2
 echo "User: $AZUREUSER"
 echo "User home dir: $HOMEDIR"
 echo "vmname: $VMNAME"
@@ -146,10 +146,6 @@ echo "completed ubuntu devbox install on pid $$"
 #install testrpc & truffle
 ######
 
-# install the basics
-sudo apt-get install -y build-essential python 
-# upgrade npm before install tools
-sudo npm install -g npm 
-sudo npm install -g ethereumjs-testrpc truffle
-
+######
 # install visual studio
+######

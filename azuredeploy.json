@@ -59,9 +59,10 @@
         "publicIpAddressType": "Dynamic",
         "vnetId": "[resourceId(resourceGroup().name,'Microsoft.Network/virtualNetworks', variables('virtualNetworkName'))]",
         "subnetRef": "[concat(variables('vnetId'), '/subnets/', variables('subnetName'))]",
-        "setupScriptLocation": "https://raw.githubusercontent.com/evanuum/azure-blockchain--ubuntu--blockchain--dev/master/scirpts/",
-        "setupScriptName": "installdevvm.sh",
-        "setupCommand": "sh"
+        "customScriptLocation": "https://raw.githubusercontent.com/evanuum/azure-blockchain--ubuntu--blockchain--dev/master/scripts/",
+        "wgetCommandPrefix": "[concat('wget --tries 20 --retry-connrefused --waitretry=15 -qO- ', variables('customScriptLocation'), 'installbcdevvm.sh | nohup /bin/bash -s ')]",
+        "wgetCommandPostfix":  " > /var/log/azure/install.log 2>&1 &'",
+        "commandPrefix": "/bin/bash -c '"
     },
     "resources": [
         {
@@ -207,15 +208,12 @@
                     "[concat('Microsoft.Compute/virtualMachines/', parameters('virtualMachineName'))]"
                 ],
             "properties": {
-                    "publisher": "Microsoft.Azure.Extensions",
-                    "type": "CustomScript",
-                    "typeHandlerVersion": "2.0",
-                    "autoUpgradeMinorVersion": true,
-                    "settings": {
-                    "fileUris": [
-                        "[concat(variables('setupScriptLocation'), variables('setupScriptName'))]"
-                    ],
-                    "commandToExecute": "[[concat(variables('setupCommand'), ' ', variables('setupScriptName'))]"
+                "publisher": "Microsoft.Azure.Extensions",
+                "type": "CustomScript",
+                "typeHandlerVersion": "2.0",
+                "autoUpgradeMinorVersion": true,
+                "settings": {
+                    "commandToExecute": "[concat(variables('commandPrefix'), variables('wgetCommandPrefix'), parameters('adminUsername'),  parameters('virtualMachineName'), variables('wgetCommandPostfix'))]"
                 }
             }
         }
