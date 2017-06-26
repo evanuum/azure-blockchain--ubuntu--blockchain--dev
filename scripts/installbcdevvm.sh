@@ -14,6 +14,7 @@ ps axjf
 AZUREUSER=$1
 HOMEDIR="/home/$AZUREUSER"
 VMNAME=$2
+PSWD=$3
 echo "User: $AZUREUSER"
 echo "User home dir: $HOMEDIR"
 echo "vmname: $VMNAME"
@@ -92,7 +93,7 @@ echo "vncserver -kill :1" | sudo tee $HOMEDIR/bin/stopvnc
 echo "export PATH=\$PATH:~/bin" | sudo tee -a $HOMEDIR/.bashrc
 
 prog=/usr/bin/vncpasswd
-mypass="password"
+mypass=PSWD
 
 sudo -i -u $AZUREUSER /usr/bin/expect <<EOF
 spawn "$prog"
