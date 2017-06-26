@@ -75,13 +75,10 @@ ensureAzureNetwork
 time sudo apt-get -y update
 # kill the waagent and uninstall, otherwise, adding the desktop will do this and kill this script
 sudo pkill waagent
-time sudo apt-get -y remove walinuxagentsudo dpkg --configure -a
+time sudo apt-get -y remove walinuxagent
 sudo dpkg --configure -a
 # install nodejs 
-time curl -sL https://deb.nodesource.com/setup_6.x | sudo -E bash -
-time sudo apt-get install -y --force-yes nodejs
-time sudo npm install -g npm
-time sudo DEBIAN_FRONTEND=noninteractive apt-get -y --force-yes install ubuntu-desktop vnc4server ntp  expect gnome-panel gnome-settings-daemon metacity nautilus gnome-terminal gnome-core
+time sudo DEBIAN_FRONTEND=noninteractive apt-get -y --force-yes install ubuntu-desktop vnc4server ntp nodejs expect gnome-panel gnome-settings-daemon metacity nautilus gnome-terminal gnome-core
 
 #########################################
 # Setup Azure User Account including VNC
@@ -128,8 +125,6 @@ echo "metacity &" | sudo tee -a $HOMEDIR/.vnc/xstartup
 echo "nautilus &" | sudo tee -a $HOMEDIR/.vnc/xstartup
 echo "gnome-terminal &" | sudo tee -a $HOMEDIR/.vnc/xstartup
 
-sudo -i -u $AZUREUSER $HOMEDIR/bin/startvnc
-
 ####################
 # Setup Chrome
 ####################
@@ -143,12 +138,14 @@ date
 ######
 #install testrpc & truffle
 ######
-# install packages
-time sudo apt-get -y update && sudo apt-get -y upgrade
-time sudo apt-get -y install curl git vim build-essential
-# install truffle & testrpc
-time sudo npm install -g ethereumjs-testrpc
-time sudo npm install -g truffle@beta
+# install npm from official repo, as apt-get has a very old version of npm
+curl -sL https://deb.nodesource.com/setup_7.x | sudo -E bash –
+sudo apt-get update -y && sudo apt-get upgrade -y 
+# install the basics
+sudo apt-get install -y build-essential python nodejs 
+# upgrade npm before install tools
+sudo npm install -g npm 
+sudo npm install -g ethereumjs-testrpc truffle
 date
 
 ######
@@ -159,13 +156,15 @@ time sudo add-apt-repository -y ppa:ubuntu-desktop/ubuntu-make
 time sudo apt-get -y update
 time sudo apt-get -y install ubuntu-make
 # install vs code
-time umake ide visual-studio-code --accept-license $HOMEDIR/.local/share/umake/ide/visual-studio-code
+time sudo umake ide visual-studio-code --accept-license $HOMEDIR/.local/share/umake/ide/visual-studio-code
 # fix to ensure vs code start in dekstop
 time sudo sed -i 's/BIG-REQUESTS/_IG-REQUESTS/' /usr/lib/x86_64-linux-gnu/libxcb.so.1
 # add extensions (solidity and icon theme)
 # time sudo $HOMEDIR/.local/share/umake/ide/visual-studio-code/code --install-extension JuanBlanco.solidity
 # time sudo $HOMEDIR/.local/share/umake/ide/visual-studio-code/code --install-extension PKief.material-icon-theme
 date
+
+sudo -i -u $AZUREUSER $HOMEDIR/bin/startvnc
 
 # end of install
 echo "completed ubuntu devbox install on pid $$"
