@@ -77,7 +77,7 @@ time sudo apt-get -y update
 sudo pkill waagent
 time sudo apt-get -y remove walinuxagentsudo dpkg --configure -a
 sudo dpkg --configure -a
-time sudo DEBIAN_FRONTEND=noninteractive apt-get -y --force-yes install ubuntu-desktop firefox vnc4server ntp nodejs npm expect gnome-panel gnome-settings-daemon metacity nautilus gnome-terminal gnome-core
+time sudo DEBIAN_FRONTEND=noninteractive apt-get -y --force-yes install ubuntu-desktop vnc4server ntp nodejs npm expect gnome-panel gnome-settings-daemon metacity nautilus gnome-terminal gnome-core
 
 #########################################
 # Setup Azure User Account including VNC
@@ -141,12 +141,21 @@ time sudo dpkg -i google-chrome-stable_current_amd64.deb
 time sudo apt-get -y --force-yes install -f
 time rm /tmp/google-chrome-stable_current_amd64.deb
 date
-echo "completed ubuntu devbox install on pid $$"
 
 ######
 #install testrpc & truffle
 ######
 
 ######
-# install visual studio
+# install visual studio using make
 ######
+#install make
+time sudo add-apt-repository ppa:ubuntu-desktop/ubuntu-make
+time sudo apt-get update
+time sudo apt-get install ubuntu-make
+#install vs code
+time umake ide visual-studio-code
+date
+
+# end of install
+echo "completed ubuntu devbox install on pid $$"
