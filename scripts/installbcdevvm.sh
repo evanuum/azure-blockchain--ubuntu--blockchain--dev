@@ -87,7 +87,7 @@ sudo -i -u $AZUREUSER touch $HOMEDIR/bin/startvnc
 sudo -i -u $AZUREUSER chmod 755 $HOMEDIR/bin/startvnc
 sudo -i -u $AZUREUSER touch $HOMEDIR/bin/stopvnc
 sudo -i -u $AZUREUSER chmod 755 $HOMEDIR/bin/stopvnc
-echo "vncserver -geometry 1280x1024 -depth 16" | sudo tee $HOMEDIR/bin/startvnc
+echo "vncserver -geometry 1024x768 -depth 16" | sudo tee $HOMEDIR/bin/startvnc
 echo "vncserver -kill :1" | sudo tee $HOMEDIR/bin/stopvnc
 echo "export PATH=\$PATH:~/bin" | sudo tee -a $HOMEDIR/.bashrc
 
@@ -145,16 +145,32 @@ date
 ######
 #install testrpc & truffle
 ######
+# install packages
+time sudo apt-get -y update && sudo apt-get -y upgrade
+time sudo apt-get -y install curl git vim build-essential
+# install nodejs
+time curl -sL https://deb.nodesource.com/setup_8.x | sudo -E bash -
+time sudo apt-get install -y nodejs
+time sudo npm install -g express
+# install truffle & testrpc
+time sudo npm install -g truffle
+time sudo npm install -g ethereumjs-testrpc
+date
 
 ######
 # install visual studio using make
 ######
-#install make
-time sudo add-apt-repository ppa:ubuntu-desktop/ubuntu-make
-time sudo apt-get update
-time sudo apt-get install ubuntu-make
-#install vs code
-time umake ide visual-studio-code
+# install make
+time sudo add-apt-repository -y ppa:ubuntu-desktop/ubuntu-make
+time sudo apt-get -y update
+time sudo apt-get -y install ubuntu-make
+# install vs code
+time umake ide visual-studio-code --accept-license $HOMEDIR/.local/share/umake/ide/visual-studio-code
+# fix to ensure vs code start in dekstop
+time sudo sed -i 's/BIG-REQUESTS/_IG-REQUESTS/' /usr/lib/x86_64-linux-gnu/libxcb.so.1
+# add extensions (solidity and icon theme)
+# time sudo $HOMEDIR/.local/share/umake/ide/visual-studio-code/code --install-extension JuanBlanco.solidity
+# time sudo $HOMEDIR/.local/share/umake/ide/visual-studio-code/code --install-extension PKief.material-icon-theme
 date
 
 # end of install
