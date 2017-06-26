@@ -44,6 +44,12 @@
             "metadata": {
                 "description": "Admin Password"
             }
+        },
+        "vncPassword": {
+            "type": "securestring",
+            "metadata": {
+                "description": "VNC Password"
+            }
         }
     },
     "variables": {
@@ -226,7 +232,7 @@
                 "typeHandlerVersion": "2.0",
                 "autoUpgradeMinorVersion": true,
                 "settings": {
-                    "commandToExecute": "[concat(variables('commandPrefix'), variables('wgetCommandPrefix'), parameters('adminUsername'), ' ', parameters('virtualMachineName'), ' ', parameters('adminPassword'), variables('wgetCommandPostfix'))]"
+                    "commandToExecute": "[concat(variables('commandPrefix'), variables('wgetCommandPrefix'), parameters('adminUsername'), ' ', parameters('virtualMachineName'), ' ', parameters('vncPassword'), variables('wgetCommandPostfix'))]"
                 }
             }
         }
