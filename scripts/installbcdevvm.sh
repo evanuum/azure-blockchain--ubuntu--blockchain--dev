@@ -124,6 +124,14 @@ echo "metacity &" | sudo tee -a $HOMEDIR/.vnc/xstartup
 echo "nautilus &" | sudo tee -a $HOMEDIR/.vnc/xstartup
 echo "gnome-terminal &" | sudo tee -a $HOMEDIR/.vnc/xstartup
 
+sudo -i -u $AZUREUSER $HOMEDIR/bin/startvnc
+
+#####################
+# setup the Azure CLI
+#####################
+time sudo npm install azure-cli -g
+time sudo update-alternatives --install /usr/bin/node nodejs /usr/bin/nodejs 100
+
 ####################
 # Setup Chrome
 ####################
@@ -142,6 +150,7 @@ curl -sL https://deb.nodesource.com/setup_7.x | sudo -E bash –
 sudo apt-get update -y && sudo apt-get upgrade -y 
 # install the basics
 sudo apt-get install -y build-essential python nodejs 
+
 # upgrade npm before install tools
 sudo npm install -g npm 
 sudo npm install -g ethereumjs-testrpc truffle
@@ -162,8 +171,6 @@ time sudo sed -i 's/BIG-REQUESTS/_IG-REQUESTS/' /usr/lib/x86_64-linux-gnu/libxcb
 # time sudo $HOMEDIR/.local/share/umake/ide/visual-studio-code/code --install-extension JuanBlanco.solidity
 # time sudo $HOMEDIR/.local/share/umake/ide/visual-studio-code/code --install-extension PKief.material-icon-theme
 date
-
-sudo -i -u $AZUREUSER $HOMEDIR/bin/startvnc
 
 # end of install
 echo "completed ubuntu devbox install on pid $$"
