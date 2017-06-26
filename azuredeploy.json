@@ -57,7 +57,7 @@
         "subnetPrefix": "10.0.0.0/24",
         "publicIpAddressName": "[concat(parameters('virtualMachineName'), '-ip')]",
         "publicIpAddressType": "Dynamic",
-        "vnetId": "[resourceId('UbuntuDevRG','Microsoft.Network/virtualNetworks', variables('virtualNetworkName'))]",
+        "vnetId": "[resourceId(resourceGroup().name,'Microsoft.Network/virtualNetworks', variables('virtualNetworkName'))]",
         "subnetRef": "[concat(variables('vnetId'), '/subnets/', variables('subnetName'))]",
         "setupScriptLocation": "https://raw.githubusercontent.com/evanuum/azure-blockchain--ubuntu--deploy/master/scripts/",
         "shcommand": "sh installdevvm.sh"
@@ -150,13 +150,13 @@
                             },
                             "privateIPAllocationMethod": "Dynamic",
                             "publicIpAddress": {
-                                "id": "[resourceId('UbuntuDevRG','Microsoft.Network/publicIpAddresses', variables('publicIpAddressName'))]"
+                                "id": "[resourceId(resourceGroup().name,'Microsoft.Network/publicIpAddresses', variables('publicIpAddressName'))]"
                             }
                         }
                     }
                 ],
                 "networkSecurityGroup": {
-                    "id": "[resourceId('UbuntuDevRG', 'Microsoft.Network/networkSecurityGroups', variables('networkSecurityGroupName'))]"
+                    "id": "[resourceId(resourceGroup().name, 'Microsoft.Network/networkSecurityGroups', variables('networkSecurityGroupName'))]"
                 }
             },
             "dependsOn": [
