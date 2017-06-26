@@ -51,6 +51,7 @@
         "networkInterfaceName": "[concat(parameters('virtualMachineName'), '-nic')]",
         "networkSecurityGroupName": "[concat(parameters('virtualMachineName'), '-nsg')]",
         "storageAccountName": "[concat(uniquestring(resourceGroup().id, '-storage'))]",
+        "storageAccountType": "Standard_LRS",
         "addressPrefix": "10.0.0.0/16",
         "subnetName": "subnet1",
         "subnetPrefix": "10.0.0.0/24",
@@ -103,6 +104,15 @@
             "dependsOn": [
                 "[concat('Microsoft.Network/networkInterfaces/', variables('networkInterfaceName'))]"
             ]
+        },
+        {
+            "name": "[variables('storageAccountName')]",
+            "type": "Microsoft.Storage/storageAccounts",
+            "apiVersion": "2015-06-15",
+            "location": "[resourceGroup().location]",
+            "properties": {
+                "accountType": "[variables('storageAccountType')]"
+            }
         },
         {
             "type": "Microsoft.Network/virtualNetworks",
