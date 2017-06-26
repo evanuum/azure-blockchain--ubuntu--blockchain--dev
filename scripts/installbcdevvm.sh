@@ -75,9 +75,9 @@ ensureAzureNetwork
 time sudo apt-get -y update
 # kill the waagent and uninstall, otherwise, adding the desktop will do this and kill this script
 sudo pkill waagent
+# sudo dpkg --configure -a
 # install nodejs 
-time sudo DEBIAN_FRONTEND=noninteractive apt-get -y --force-yes install ubuntu-desktop vnc4server ntp nodejs expect gnome-panel gnome-settings-daemon metacity nautilus gnome-terminal gnome-core
-sudo dpkg --configure -a
+time sudo DEBIAN_FRONTEND=noninteractive apt-get -y install ubuntu-desktop vnc4server ntp nodejs npm expect gnome-panel gnome-settings-daemon metacity nautilus gnome-terminal gnome-core
 
 #########################################
 # Setup Azure User Account including VNC
@@ -126,22 +126,6 @@ echo "gnome-terminal &" | sudo tee -a $HOMEDIR/.vnc/xstartup
 
 sudo -i -u $AZUREUSER $HOMEDIR/bin/startvnc
 
-#####################
-# setup the Azure CLI
-#####################
-time sudo npm install azure-cli -g
-time sudo update-alternatives --install /usr/bin/node nodejs /usr/bin/nodejs 100
-
-####################
-# Setup Chrome
-####################
-cd /tmp
-time wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
-time sudo dpkg -i google-chrome-stable_current_amd64.deb
-time sudo apt-get -y --force-yes install -f
-time rm /tmp/google-chrome-stable_current_amd64.deb
-date
-
 ######
 #install testrpc & truffle
 ######
@@ -153,7 +137,7 @@ sudo apt-get install -y build-essential python nodejs
 
 # upgrade npm before install tools
 sudo npm install -g npm 
-sudo npm install -g ethereumjs-testrpc truffle
+sudo npm install -g ethereumjs-testrpc truffle@beta
 date
 
 ######
@@ -170,6 +154,22 @@ time sudo sed -i 's/BIG-REQUESTS/_IG-REQUESTS/' /usr/lib/x86_64-linux-gnu/libxcb
 # add extensions (solidity and icon theme)
 # time sudo $HOMEDIR/.local/share/umake/ide/visual-studio-code/code --install-extension JuanBlanco.solidity
 # time sudo $HOMEDIR/.local/share/umake/ide/visual-studio-code/code --install-extension PKief.material-icon-theme
+date
+
+#####################
+# setup the Azure CLI
+#####################
+time sudo npm install azure-cli -g
+time sudo update-alternatives --install /usr/bin/node nodejs /usr/bin/nodejs 100
+
+####################
+# Setup Chrome
+####################
+cd /tmp
+time wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+time sudo dpkg -i google-chrome-stable_current_amd64.deb
+time sudo apt-get -y -f
+time rm /tmp/google-chrome-stable_current_amd64.deb
 date
 
 # end of install
