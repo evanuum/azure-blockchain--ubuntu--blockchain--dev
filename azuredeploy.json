@@ -1,0 +1,214 @@
+{
+    "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "virtualMachineName": {
+            "type": "string",
+            "metadata": {
+                "description": "Name of Vurtual Machine"
+            }
+        },
+        "virtualMachineSize": {
+            "type": "string",
+            "allowedValues": [
+                "Standard_DS1_V2",
+                "Standard_Ds2_V2",
+                "Standard_DS3_V2"
+            ],
+            "metadata": {
+                "description": "Size of Virual Machine"
+            }
+        },
+        "ubuntuVersion": {
+            "type": "string",
+            "allowedValues": [
+                "16.04-LTS",
+                "17.04"
+            ],
+            "metadata": {
+                "description": "Ubuntu Version"
+            }
+        },
+        "adminUsername": {
+            "type": "string",
+            "metadata": {
+                "description": "Admin Username"
+            }
+        },
+        "adminPassword": {
+            "type": "securestring",
+            "metadata": {
+                "description": "Admin Password"
+            }
+        }
+    },
+    "variables": {
+        "virtualNetworkName": "[concat(parameters('virtualMachineName'), '-vnet')]",
+        "networkInterfaceName": "[concat(parameters('virtualMachineName'), '-nic')]",
+        "networkSecurityGroupName": "[concat(parameters('virtualMachineName'), '-nsg')]",
+        "storageAccountName": "[concat(uniquestring(resourceGroup().id, '-storage'))]",
+        "addressPrefix": "10.0.0.0/16",
+        "subnetName": "subnet1",
+        "subnetPrefix": "10.0.0.0/24",
+        "publicIpAddressName": "[concat(parameters('virtualMachineName'), '-ip')]",
+        "publicIpAddressType": "Dynamic",
+        "vnetId": "[resourceId('UbuntuDevRG','Microsoft.Network/virtualNetworks', variables('virtualNetworkName'))]",
+        "subnetRef": "[concat(variables('vnetId'), '/subnets/', variables('subnetName'))]",
+        "setupScriptLocation": "https://raw.githubusercontent.com/evanuum/azure-blockchain--ubuntu--deploy/master/scripts/",
+        "shcommand": "sh installdevvm.sh"
+    },
+    "resources": [
+        {
+            "type": "Microsoft.Compute/virtualMachines",
+            "name": "[parameters('virtualMachineName')]",
+            "apiVersion": "2016-04-30-preview",
+            "location": "[resourceGroup().location]",
+            "properties": {
+                "osProfile": {
+                    "computerName": "[parameters('virtualMachineName')]",
+                    "adminUsername": "[parameters('adminUsername')]",
+                    "adminPassword": "[parameters('adminPassword')]"
+                },
+                "hardwareProfile": {
+                    "vmSize": "[parameters('virtualMachineSize')]"
+                },
+                "storageProfile": {
+                    "imageReference": {
+                        "publisher": "Canonical",
+                        "offer": "UbuntuServer",
+                        "sku": "[parameters('ubuntuVersion')]",
+                        "version": "latest"
+                    },
+                    "osDisk": {
+                        "createOption": "FromImage",
+                        "vhd": {
+                            "uri": "[concat(concat(reference(resourceId('shellsappocj94rg', 'Microsoft.Storage/storageAccounts', variables('storageAccountName')), '2015-06-15').primaryEndpoints['blob'], 'vhds/'), parameters('virtualMachineName'), '20170623132428.vhd')]"
+                        },
+                        "name": "[parameters('virtualMachineName')]"
+                    },
+                    "dataDisks": []
+                },
+                "networkProfile": {
+                    "networkInterfaces": [
+                        {
+                            "id": "[resourceId('Microsoft.Network/networkInterfaces', variables('networkInterfaceName'))]"
+                        }
+                    ]
+                }
+            },
+            "dependsOn": [
+                "[concat('Microsoft.Network/networkInterfaces/', variables('networkInterfaceName'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Network/virtualNetworks",
+            "name": "[variables('virtualNetworkName')]",
+            "apiVersion": "2016-12-01",
+            "location": "[resourceGroup().location]",
+            "properties": {
+                "addressSpace": {
+                    "addressPrefixes": [
+                        "[variables('addressPrefix')]"
+                    ]
+                },
+                "subnets": [
+                    {
+                        "name": "[variables('subnetName')]",
+                        "properties": {
+                            "addressPrefix": "[variables('subnetPrefix')]"
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "type": "Microsoft.Network/networkInterfaces",
+            "name": "[variables('networkInterfaceName')]",
+            "apiVersion": "2016-09-01",
+            "location": "[resourceGroup().location]",
+            "properties": {
+                "ipConfigurations": [
+                    {
+                        "name": "ipconfig1",
+                        "properties": {
+                            "subnet": {
+                                "id": "[variables('subnetRef')]"
+                            },
+                            "privateIPAllocationMethod": "Dynamic",
+                            "publicIpAddress": {
+                                "id": "[resourceId('UbuntuDevRG','Microsoft.Network/publicIpAddresses', variables('publicIpAddressName'))]"
+                            }
+                        }
+                    }
+                ],
+                "networkSecurityGroup": {
+                    "id": "[resourceId('UbuntuDevRG', 'Microsoft.Network/networkSecurityGroups', variables('networkSecurityGroupName'))]"
+                }
+            },
+            "dependsOn": [
+                "[concat('Microsoft.Network/virtualNetworks/', variables('virtualNetworkName'))]",
+                "[concat('Microsoft.Network/publicIpAddresses/', variables('publicIpAddressName'))]",
+                "[concat('Microsoft.Network/networkSecurityGroups/', variables('networkSecurityGroupName'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Network/publicIpAddresses",
+            "name": "[variables('publicIpAddressName')]",
+            "apiVersion": "2016-09-01",
+            "location": "[resourceGroup().location]",
+            "properties": {
+                "publicIpAllocationMethod": "[variables('publicIpAddressType')]"
+            }
+        },
+        {
+            "type": "Microsoft.Network/networkSecurityGroups",
+            "name": "[variables('networkSecurityGroupName')]",
+            "apiVersion": "2016-09-01",
+            "location": "[resourceGroup().location]",
+            "properties": {
+                "securityRules": [
+                    {
+                        "name": "default-allow-ssh",
+                        "properties": {
+                            "priority": 1000,
+                            "sourceAddressPrefix": "*",
+                            "protocol": "Tcp",
+                            "destinationPortRange": "22",
+                            "access": "Allow",
+                            "direction": "Inbound",
+                            "sourcePortRange": "*",
+                            "destinationAddressPrefix": "*"
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "type": "Microsoft.Compute/virtualMachines/extensions",
+            "name": "[concat(parameters('virtualMachineName'),'/installcustomscript')]",
+            "apiVersion": "2016-03-30",
+            "location": "[resourceGroup().location]",
+            "dependsOn": [
+                    "[concat('Microsoft.Compute/virtualMachines/', parameters('virtualMachineName'))]"
+                ],
+            "properties": {
+                    "publisher": "Microsoft.Azure.Extensions",
+                    "type": "CustomScript",
+                    "typeHandlerVersion": "2.0",
+                    "autoUpgradeMinorVersion": true,
+                    "settings": {
+                    "fileUris": [
+                        "[concat(variables('setupScriptLocation'), 'installdevvm.sh')]"
+                    ],
+                    "commandToExecute": "[variables('shcommand')]"
+                }
+            }
+        }
+    ],
+    "outputs": {
+        "adminUsername": {
+            "type": "string",
+            "value": "[parameters('adminUsername')]"
+        }
+    }
+}
