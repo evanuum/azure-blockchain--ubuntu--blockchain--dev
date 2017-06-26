@@ -6,3 +6,5 @@ sudo apt-get install -y build-essential python nodejs
 # upgrade npm before install tools
 sudo npm install -g npm 
 sudo npm install -g ethereumjs-testrpc truffle
+# install ubuntu-desktop
+# install visual studio
