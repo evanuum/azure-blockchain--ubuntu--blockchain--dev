@@ -47,6 +47,7 @@
         },
         "vncPassword": {
             "type": "securestring",
+            "minLength": 8,
             "metadata": {
                 "description": "VNC Password"
             }
