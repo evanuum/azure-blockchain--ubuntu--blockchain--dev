@@ -4,6 +4,7 @@
     "parameters": {
         "virtualMachineName": {
             "type": "string",
+            "defaultValue": "devvm",
             "metadata": {
                 "description": "Name of Vurtual Machine"
             }
@@ -15,6 +16,7 @@
                 "Standard_Ds2_V2",
                 "Standard_DS3_V2"
             ],
+            "defaultValue": "Standard_DS1_V2",
             "metadata": {
                 "description": "Size of Virual Machine"
             }
@@ -25,12 +27,14 @@
                 "16.04-LTS",
                 "17.04"
             ],
+            "defaultValue": "16.04-LTS",
             "metadata": {
                 "description": "Ubuntu Version"
             }
         },
         "adminUsername": {
             "type": "string",
+            "defaultValue": "devadmin",
             "metadata": {
                 "description": "Admin Username"
             }
@@ -82,7 +86,7 @@
                     "osDisk": {
                         "createOption": "FromImage",
                         "vhd": {
-                            "uri": "[concat(concat(reference(resourceId('shellsappocj94rg', 'Microsoft.Storage/storageAccounts', variables('storageAccountName')), '2015-06-15').primaryEndpoints['blob'], 'vhds/'), parameters('virtualMachineName'), '20170623132428.vhd')]"
+                            "uri": "[concat(concat(reference(resourceId(resourceGroup().name, 'Microsoft.Storage/storageAccounts', variables('storageAccountName')), '2015-06-15').primaryEndpoints['blob'], 'vhds/'), parameters('virtualMachineName'), uniqueString(resourceGroup().id) ,'.vhd')]"
                         },
                         "name": "[parameters('virtualMachineName')]"
                     },

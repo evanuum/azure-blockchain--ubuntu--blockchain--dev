@@ -12,6 +12,9 @@
     "virtualMachineSize": {
       "value": "Standard_DS1_V2"
     },
+    "ubuntuVersion": {
+      "value": "16.04-LTS"
+    },
     "virtualMachineName": {
       "value": "devvm"
     }
