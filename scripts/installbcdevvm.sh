@@ -75,7 +75,8 @@ ensureAzureNetwork
 time sudo apt-get -y update
 # kill the waagent and uninstall, otherwise, adding the desktop will do this and kill this script
 sudo pkill waagent
-time sudo apt-get -y remove walinuxagent
+time sudo apt-get -y remove walinuxagentsudo dpkg --configure -a
+sudo dpkg --configure -a
 time sudo DEBIAN_FRONTEND=noninteractive apt-get -y --force-yes install ubuntu-desktop firefox vnc4server ntp nodejs npm expect gnome-panel gnome-settings-daemon metacity nautilus gnome-terminal gnome-core
 
 #########################################
