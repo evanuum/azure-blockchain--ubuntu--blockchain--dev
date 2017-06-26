@@ -59,8 +59,9 @@
         "publicIpAddressType": "Dynamic",
         "vnetId": "[resourceId(resourceGroup().name,'Microsoft.Network/virtualNetworks', variables('virtualNetworkName'))]",
         "subnetRef": "[concat(variables('vnetId'), '/subnets/', variables('subnetName'))]",
-        "setupScriptLocation": "https://raw.githubusercontent.com/evanuum/azure-blockchain--ubuntu--deploy/master/scripts/",
-        "shcommand": "sh installdevvm.sh"
+        "setupScriptLocation": "https://raw.githubusercontent.com/evanuum/azure-blockchain--ubuntu--blockchain--dev/master/scirpts/",
+        "setupScriptName": "installdevvm.sh",
+        "setupCommand": "sh"
     },
     "resources": [
         {
@@ -212,9 +213,9 @@
                     "autoUpgradeMinorVersion": true,
                     "settings": {
                     "fileUris": [
-                        "[concat(variables('setupScriptLocation'), 'installdevvm.sh')]"
+                        "[concat(variables('setupScriptLocation'), variables('setupScriptName'))]"
                     ],
-                    "commandToExecute": "[variables('shcommand')]"
+                    "commandToExecute": "[[concat(variables('setupCommand'), ' ', variables('setupScriptName'))]"
                 }
             }
         }
