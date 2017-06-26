@@ -75,10 +75,9 @@ ensureAzureNetwork
 time sudo apt-get -y update
 # kill the waagent and uninstall, otherwise, adding the desktop will do this and kill this script
 sudo pkill waagent
-time sudo apt-get -y remove walinuxagent
-sudo dpkg --configure -a
 # install nodejs 
 time sudo DEBIAN_FRONTEND=noninteractive apt-get -y --force-yes install ubuntu-desktop vnc4server ntp nodejs expect gnome-panel gnome-settings-daemon metacity nautilus gnome-terminal gnome-core
+sudo dpkg --configure -a
 
 #########################################
 # Setup Azure User Account including VNC
