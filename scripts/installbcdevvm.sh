@@ -77,7 +77,11 @@ time sudo apt-get -y update
 sudo pkill waagent
 time sudo apt-get -y remove walinuxagentsudo dpkg --configure -a
 sudo dpkg --configure -a
-time sudo DEBIAN_FRONTEND=noninteractive apt-get -y --force-yes install ubuntu-desktop vnc4server ntp nodejs npm expect gnome-panel gnome-settings-daemon metacity nautilus gnome-terminal gnome-core
+# install nodejs 
+time curl -sL https://deb.nodesource.com/setup_6.x | sudo -E bash -
+time sudo apt-get install -y --force-yes nodejs
+time sudo npm install -g npm
+time sudo DEBIAN_FRONTEND=noninteractive apt-get -y --force-yes install ubuntu-desktop vnc4server ntp  expect gnome-panel gnome-settings-daemon metacity nautilus gnome-terminal gnome-core
 
 #########################################
 # Setup Azure User Account including VNC
@@ -126,12 +130,6 @@ echo "gnome-terminal &" | sudo tee -a $HOMEDIR/.vnc/xstartup
 
 sudo -i -u $AZUREUSER $HOMEDIR/bin/startvnc
 
-#####################
-# setup the Azure CLI
-#####################
-time sudo npm install azure-cli -g
-time sudo update-alternatives --install /usr/bin/node nodejs /usr/bin/nodejs 100
-
 ####################
 # Setup Chrome
 ####################
@@ -148,13 +146,9 @@ date
 # install packages
 time sudo apt-get -y update && sudo apt-get -y upgrade
 time sudo apt-get -y install curl git vim build-essential
-# install nodejs
-time curl -sL https://deb.nodesource.com/setup_8.x | sudo -E bash -
-time sudo apt-get install -y nodejs
-time sudo npm install -g express
 # install truffle & testrpc
-time sudo npm install -g truffle
 time sudo npm install -g ethereumjs-testrpc
+time sudo npm install -g truffle@beta
 date
 
 ######
