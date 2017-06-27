@@ -163,7 +163,7 @@ sudo npm install -g npm
 sudo npm install -g truffle@beta
 sudo npm install -g ethereumjs-testrpc@beta
 # install parity
-time sudo -H -u $AZUREUSER bash -c 'bash <(curl https://get.parity.io -Lk)''
+time sudo -H -u $AZUREUSER bash -c 'bash <(curl https://get.parity.io -Lk)'
 date
 
 # end of install
