@@ -1,6 +1,6 @@
 # Ubuntu Blockchain Development VM
 
-ARM Template to provision a Ubuntu VM complete with Visual Studio Code, Truffle and TestRPC for Ethereum blockchain development. 
+ARM Template to provision a Ubuntu VM complete with Visual Studio Code, Truffle, TestRPC and Parity for Ethereum blockchain development. 
 
 <a href="https://portal.azure.com/#create/microsoft.template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fevanuum%2Fazure-blockchain--ubuntu--blockchain--dev%2Fmaster%2Fazuredeploy.json" target="_blank">
     <img src="http://azuredeploy.net/deploybutton.png"/>
