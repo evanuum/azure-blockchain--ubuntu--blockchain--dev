@@ -1,4 +1,4 @@
-# ARM Blockchain Dev VM
+# Ubuntu Blockchain Development VM
 
 ARM Template to provision a Ubuntu VM complete with Visual Studio Code, Truffle and TestRPC for Ethereum blockchain development. 
 
