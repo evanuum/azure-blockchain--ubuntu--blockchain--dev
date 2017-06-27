@@ -127,21 +127,6 @@ echo "gnome-terminal &" | sudo tee -a $HOMEDIR/.vnc/xstartup
 sudo -i -u $AZUREUSER $HOMEDIR/bin/startvnc
 
 ######
-#install testrpc & truffle
-######
-# install npm from official repo, as apt-get has a very old version of npm
-curl -sL https://deb.nodesource.com/setup_7.x | sudo -E bash
-sudo apt-get update -y && sudo apt-get upgrade -y 
-# install the basics
-sudo apt-get install -y build-essential python nodejs 
-
-# upgrade npm before install tools
-sudo npm install -g npm 
-sudo npm install -g truffle@beta
-sudo npm install -g ethereumjs-testrpc
-date
-
-######
 # install visual studio code
 ######
 sudo add-apt-repository -y "deb https://packages.microsoft.com/repos/vscode stable main"
@@ -169,6 +154,21 @@ time wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.
 time sudo dpkg -i google-chrome-stable_current_amd64.deb
 time sudo apt-get -y -f
 time rm /tmp/google-chrome-stable_current_amd64.deb
+date
+
+######
+#install testrpc & truffle
+######
+# install npm from official repo, as apt-get has a very old version of npm
+curl -sL https://deb.nodesource.com/setup_7.x | sudo -E bash
+sudo apt-get update -y && sudo apt-get upgrade -y 
+# install the basics
+sudo apt-get install -y build-essential python nodejs 
+
+# upgrade npm before install tools
+sudo npm install -g npm 
+sudo npm install -g truffle@beta
+sudo npm install -g ethereumjs-testrpc
 date
 
 # end of install
