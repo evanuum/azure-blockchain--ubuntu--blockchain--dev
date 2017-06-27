@@ -202,19 +202,6 @@
                             "sourcePortRange": "*",
                             "destinationAddressPrefix": "*"
                         }
-                    },
-                                        {
-                        "name": "default-allow-vnc",
-                        "properties": {
-                            "priority": 1010,
-                            "sourceAddressPrefix": "*",
-                            "protocol": "Tcp",
-                            "destinationPortRange": "5901",
-                            "access": "Allow",
-                            "direction": "Inbound",
-                            "sourcePortRange": "*",
-                            "destinationAddressPrefix": "*"
-                        }
                     }
                 ]
             }
