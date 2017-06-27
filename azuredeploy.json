@@ -68,7 +68,7 @@
         "subnetRef": "[concat(variables('vnetId'), '/subnets/', variables('subnetName'))]",
         "customScriptLocation": "https://raw.githubusercontent.com/evanuum/azure-blockchain--ubuntu--blockchain--dev/master/scripts/",
         "wgetCommandPrefix": "[concat('wget --tries 20 --retry-connrefused --waitretry=15 -qO- ', variables('customScriptLocation'), 'installbcdevvm.sh | nohup /bin/bash -s ')]",
-        "wgetCommandPostfix":  " > /var/log/azure/install.log 2>&1 &'",
+        "wgetCommandPostfix":  " > /var/log/initial-install.log 2>&1 &'",
         "commandPrefix": "/bin/bash -c '"
     },
     "resources": [

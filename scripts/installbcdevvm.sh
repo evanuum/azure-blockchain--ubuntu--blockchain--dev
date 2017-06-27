@@ -130,10 +130,10 @@ sudo -i -u $AZUREUSER $HOMEDIR/bin/startvnc
 #install testrpc & truffle
 ######
 # install npm from official repo, as apt-get has a very old version of npm
-curl -sL https://deb.nodesource.com/setup_7.x | sudo -E bash –
+curl -sL https://deb.nodesource.com/setup_7.x | sudo -E bash
 sudo apt-get update -y && sudo apt-get upgrade -y 
 # install the basics
-sudo apt-get install -y build-essential python nodejs 
+sudo apt-get install -y --force git build-essential python nodejs 
 
 # upgrade npm before install tools
 sudo npm install -g npm 
@@ -141,26 +141,24 @@ sudo npm install -g ethereumjs-testrpc truffle@beta
 date
 
 ######
-# install visual studio using make
+# install visual studio code
 ######
-# install make
-time sudo add-apt-repository -y ppa:ubuntu-desktop/ubuntu-make
-time sudo apt-get -y update
-time sudo apt-get -y install ubuntu-make
-# install vs code
-time sudo umake ide visual-studio-code --accept-license $HOMEDIR/.local/share/umake/ide/visual-studio-code
-# fix to ensure vs code start in dekstop
+sudo add-apt-repository -y "deb https://packages.microsoft.com/repos/vscode stable main"
+sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys EB3E94ADBE1229CF
+time sudo apt update -y
+time sudo apt-get -y install code
+# fix to ensure vs code starts in dekstop
 time sudo sed -i 's/BIG-REQUESTS/_IG-REQUESTS/' /usr/lib/x86_64-linux-gnu/libxcb.so.1
 # add extensions (solidity and icon theme)
-# time sudo $HOMEDIR/.local/share/umake/ide/visual-studio-code/code --install-extension JuanBlanco.solidity
-# time sudo $HOMEDIR/.local/share/umake/ide/visual-studio-code/code --install-extension PKief.material-icon-theme
+time sudo code --install-extension JuanBlanco.solidity
+time sudo code --install-extension PKief.material-icon-theme
 date
 
 #####################
 # setup the Azure CLI
 #####################
-time sudo npm install azure-cli -g
-time sudo update-alternatives --install /usr/bin/node nodejs /usr/bin/nodejs 100
+#time sudo npm install azure-cli -g
+#time sudo update-alternatives --install /usr/bin/node nodejs /usr/bin/nodejs 100
 
 ####################
 # Setup Chrome
