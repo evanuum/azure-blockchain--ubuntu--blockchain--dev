@@ -136,8 +136,8 @@ time sudo apt-get -y install code
 # fix to ensure vs code starts in dekstop
 time sudo sed -i 's/BIG-REQUESTS/_IG-REQUESTS/' /usr/lib/x86_64-linux-gnu/libxcb.so.1
 # add extensions (solidity and icon theme)
-time sudo code --install-extension JuanBlanco.solidity
-time sudo code --install-extension PKief.material-icon-theme
+time code --install-extension JuanBlanco.solidity
+time code --install-extension PKief.material-icon-theme
 date
 
 #####################
