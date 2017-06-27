@@ -163,7 +163,7 @@ date
 curl -sL https://deb.nodesource.com/setup_7.x | sudo -E bash
 sudo apt-get update -y && sudo apt-get upgrade -y 
 # install the basics
-sudo apt-get install -y build-essential python nodejs 
+sudo apt-get install -y build-essential python 
 
 # upgrade npm before install tools
 sudo npm install -g npm 
