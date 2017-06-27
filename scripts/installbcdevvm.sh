@@ -152,7 +152,7 @@ date
 cd /tmp
 time wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
 time sudo dpkg -i google-chrome-stable_current_amd64.deb
-time sudo apt-get -y -f
+time sudo apt-get -f -y install
 time rm /tmp/google-chrome-stable_current_amd64.deb
 date
 
@@ -160,12 +160,14 @@ date
 #install testrpc & truffle
 ######
 # install the basics
-sudo apt-get install -y build-essential python 
+curl -sL https://deb.nodesource.com/setup_7.x | sudo -E bash
+sudo apt-get update -y && sudo apt-get upgrade -y 
+sudo apt-get install -y build-essential python nodejs
 
 # upgrade npm before install tools
 sudo npm install -g npm 
 sudo npm install -g truffle@beta
-sudo npm install -g ethereumjs-testrpc
+sudo npm install -g ethereumjs-testrpc@beta
 date
 
 # end of install
