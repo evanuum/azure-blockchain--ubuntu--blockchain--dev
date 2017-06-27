@@ -133,11 +133,12 @@ sudo -i -u $AZUREUSER $HOMEDIR/bin/startvnc
 curl -sL https://deb.nodesource.com/setup_7.x | sudo -E bash
 sudo apt-get update -y && sudo apt-get upgrade -y 
 # install the basics
-sudo apt-get install -y --force git build-essential python nodejs 
+sudo apt-get install -y build-essential python nodejs 
 
 # upgrade npm before install tools
 sudo npm install -g npm 
-sudo npm install -g ethereumjs-testrpc truffle@beta
+sudo npm install -g truffle@beta
+sudo npm install -g ethereumjs-testrpc
 date
 
 ######
