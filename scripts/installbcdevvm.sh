@@ -135,9 +135,10 @@ time sudo apt update -y
 time sudo apt-get -y install code
 # fix to ensure vs code starts in dekstop
 time sudo sed -i 's/BIG-REQUESTS/_IG-REQUESTS/' /usr/lib/x86_64-linux-gnu/libxcb.so.1
-# add extensions (solidity and icon theme)
+# add extensions (solidity, material icon theme and VSTS)
 time sudo -H -u $AZUREUSER bash -c 'code --install-extension JuanBlanco.solidity'
 time sudo -H -u $AZUREUSER bash -c 'code --install-extension PKief.material-icon-theme'
+time sudo -H -u $AZUREUSER bash -c 'code --install-extension ms-vsts.team'
 date
 
 ####################
