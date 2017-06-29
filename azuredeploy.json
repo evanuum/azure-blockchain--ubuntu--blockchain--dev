@@ -13,7 +13,7 @@
             "type": "string",
             "allowedValues": [
                 "Standard_DS1_V2",
-                "Standard_Ds2_V2",
+                "Standard_DS2_V2",
                 "Standard_DS3_V2"
             ],
             "defaultValue": "Standard_DS1_V2",
