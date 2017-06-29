@@ -141,10 +141,22 @@ time sudo -H -u $AZUREUSER bash -c 'code --install-extension PKief.material-icon
 time sudo -H -u $AZUREUSER bash -c 'code --install-extension ms-vsts.team'
 date
 
+##########
+# Install Team Explorer Everywhere Command Line Client (version 14.120.0.201706271643)
+##########
+cd /tmp
+time wget wget https://github.com/Microsoft/team-explorer-everywhere/releases/download/14.120.0/TEE-CLC-14.120.0.zip
+time upzip TEE-CLC-14.120.0.zip -d /etc
+# isntall JAVA
+time sudo apt-get install default-jre
+# set PATH and clean up
+time sudo -H -u $AZUREUSER bash -c "echo 'PATH=\"\$PATH:/etc/TEE-CLC-14.120.0/\"' >> .profile"
+time sudo -H -u $AZUREUSER bash -c 'tf eula -accept'
+time rm TEE-CLC-14.120.0.zip
+
 ####################
 # Setup Chrome
 ####################
-cd /tmp
 time wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
 time sudo dpkg -i google-chrome-stable_current_amd64.deb
 time sudo apt-get -f -y install
