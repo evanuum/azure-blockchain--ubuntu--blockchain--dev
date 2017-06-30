@@ -182,7 +182,7 @@ time sudo -H -u $AZUREUSER bash -c 'tf eula -accept'
 echo "{" | sudo tee $HOMEDIR/.config/Code/User/settings.json
 echo "\"tfvc.location\": \"\$HOME/bin/TEE-CLC-14.120.0/tf\"" | sudo tee -a $HOMEDIR/.config/Code/User/settings.json
 echo "}" | sudo tee -a $HOMEDIR/.config/Code/User/settings.json
-#time rm TEE-CLC-14.120.0.zip
+time rm TEE-CLC-14.120.0.zip
 date
 
 # end of install
