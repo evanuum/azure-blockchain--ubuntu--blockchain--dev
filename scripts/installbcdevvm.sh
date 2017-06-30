@@ -176,7 +176,7 @@ time sudo apt-get -y install default-jre
 time wget https://github.com/Microsoft/team-explorer-everywhere/releases/download/14.120.0/TEE-CLC-14.120.0.zip
 time sudo -H -u $AZUREUSER bash -c 'unzip TEE-CLC-14.120.0.zip -d $HOME/bin'
 # set PATH and clean up
-echo 'PATH=\"\$PATH:\$HOME/bin/TEE-CLC-14.120.0/\"' | sudo tee -a $HOMEDIR/.profile
+echo "PATH=\"\$PATH:\$HOME/bin/TEE-CLC-14.120.0/\"" | sudo tee -a $HOMEDIR/.profile
 time sudo -H -u $AZUREUSER bash -c '$HOME/bin/TEE-CLC-14.120.0/tf eula -accept'
 # create VSCode TF user settings
 echo "{" | sudo tee $HOMEDIR/.config/Code/User/settings.json
