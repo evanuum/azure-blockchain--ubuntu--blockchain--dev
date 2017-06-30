@@ -87,7 +87,7 @@ sudo -i -u $AZUREUSER touch $HOMEDIR/bin/startvnc
 sudo -i -u $AZUREUSER chmod 755 $HOMEDIR/bin/startvnc
 sudo -i -u $AZUREUSER touch $HOMEDIR/bin/stopvnc
 sudo -i -u $AZUREUSER chmod 755 $HOMEDIR/bin/stopvnc
-echo "vncserver -geometry 1024x768 -depth 16" | sudo tee $HOMEDIR/bin/startvnc
+echo "vncserver -geometry 1280x960 -depth 16" | sudo tee $HOMEDIR/bin/startvnc
 echo "vncserver -kill :1" | sudo tee $HOMEDIR/bin/stopvnc
 echo "export PATH=\$PATH:~/bin" | sudo tee -a $HOMEDIR/.bashrc
 
@@ -176,7 +176,7 @@ time sudo apt-get -y install default-jre
 time wget https://github.com/Microsoft/team-explorer-everywhere/releases/download/14.120.0/TEE-CLC-14.120.0.zip
 time sudo -H -u $AZUREUSER bash -c 'unzip TEE-CLC-14.120.0.zip -d $HOME/bin'
 # set PATH and clean up
-time sudo -H -u $AZUREUSER bash -c 'echo PATH=\"\$PATH:\$HOME/bin/TEE-CLC-14.120.0/\" >> .profile'
+time sudo -H -u $AZUREUSER bash -c 'echo PATH=\"\$PATH:\$HOME/bin/TEE-CLC-14.120.0/\" >> $HOME/.profile'
 time sudo -H -u $AZUREUSER bash -c '$HOME/bin/TEE-CLC-14.120.0/tf eula -accept'
 # create VSCode TF user settings
 echo "{" | sudo tee $HOMEDIR/.config/Code/User/settings.json
