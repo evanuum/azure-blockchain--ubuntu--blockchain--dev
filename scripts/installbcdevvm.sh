@@ -174,7 +174,7 @@ date
 time sudo apt-get -y install default-jre
 # get TEE
 time wget https://github.com/Microsoft/team-explorer-everywhere/releases/download/14.120.0/TEE-CLC-14.120.0.zip
-time sudo -H -u $AZUREUSER bash -c 'upzip TEE-CLC-14.120.0.zip -d $HOME/bin'
+time sudo -H -u $AZUREUSER bash -c '/usr/bin/upzip TEE-CLC-14.120.0.zip -d $HOME/bin'
 # set PATH and clean up
 time sudo -H -u $AZUREUSER bash -c "echo 'PATH=\"\$PATH:\"$HOME/bin/TEE-CLC-14.120.0/\"' >> .profile"
 time sudo -H -u $AZUREUSER bash -c 'tf eula -accept'
