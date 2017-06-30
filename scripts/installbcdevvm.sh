@@ -179,8 +179,6 @@ time sudo -H -u $AZUREUSER bash -c 'unzip TEE-CLC-14.120.0.zip -d $HOME/bin'
 time sudo -H -u $AZUREUSER bash -c "echo 'PATH="$PATH:$HOME/bin/TEE-CLC-14.120.0/"' >> .profile"
 time sudo -H -u $AZUREUSER bash -c '$HOME/bin/TEE-CLC-14.120.0/tf eula -accept'
 # create VSCode TF user settings
-time sudo mkdir $HOMEDIR/.Configs/Code
-time sudo mkdir $HOMEDIR/.Configs/Code/User
 echo "{" | sudo tee $HOMEDIR/.config/Code/User/settings.json
 echo "\"tfvc.location\": \"\$HOME/bin/TEE-CLC-14.120.0/tf\"" | sudo tee -a $HOMEDIR/.config/Code/User/settings.json
 echo "}" | sudo tee -a $HOMEDIR/.config/Code/User/settings.json
