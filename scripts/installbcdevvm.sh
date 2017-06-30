@@ -141,28 +141,6 @@ time sudo -H -u $AZUREUSER bash -c 'code --install-extension PKief.material-icon
 time sudo -H -u $AZUREUSER bash -c 'code --install-extension ms-vsts.team'
 date
 
-##########
-# Install Team Explorer Everywhere Command Line Client (version 14.120.0.201706271643)
-##########
-cd /tmp
-time wget https://github.com/Microsoft/team-explorer-everywhere/releases/download/14.120.0/TEE-CLC-14.120.0.zip
-time sudo upzip TEE-CLC-14.120.0.zip -d $HOMEDIR/bin
-# isntall JAVA
-time sudo apt-get -y install default-jre
-# set PATH and clean up
-time sudo -H -u $AZUREUSER bash -c "echo 'PATH=\"\$PATH:\"$HOME/bin/TEE-CLC-14.120.0/\"' >> .profile"
-time sudo -H -u $AZUREUSER bash -c 'tf eula -accept'
-time rm TEE-CLC-14.120.0.zip
-
-####################
-# Setup Chrome
-####################
-time wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
-time sudo dpkg -i google-chrome-stable_current_amd64.deb
-time sudo apt-get -f -y install
-time rm /tmp/google-chrome-stable_current_amd64.deb
-date
-
 ######
 #install testrpc & truffle
 ######
@@ -177,6 +155,30 @@ sudo npm install -g truffle@beta
 sudo npm install -g ethereumjs-testrpc@beta
 # install parity
 time sudo -H -u $AZUREUSER bash -c 'bash <(curl https://raw.githubusercontent.com/paritytech/scripts/master/get-parity.sh -Lk)'
+date
+
+####################
+# Setup Chrome
+####################
+cd /tmp
+time wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+time sudo dpkg -i google-chrome-stable_current_amd64.deb
+time sudo apt-get -f -y install
+time rm /tmp/google-chrome-stable_current_amd64.deb
+date
+
+##########
+# Install Team Explorer Everywhere Command Line Client (version 14.120.0.201706271643)
+##########
+# install JAVA
+time sudo apt-get -y install default-jre
+# get TEE
+time wget https://github.com/Microsoft/team-explorer-everywhere/releases/download/14.120.0/TEE-CLC-14.120.0.zip
+time sudo upzip TEE-CLC-14.120.0.zip -d $HOMEDIR/bin
+# set PATH and clean up
+time sudo -H -u $AZUREUSER bash -c "echo 'PATH=\"\$PATH:\"$HOME/bin/TEE-CLC-14.120.0/\"' >> .profile"
+time sudo -H -u $AZUREUSER bash -c 'tf eula -accept'
+time rm TEE-CLC-14.120.0.zip
 date
 
 # end of install
