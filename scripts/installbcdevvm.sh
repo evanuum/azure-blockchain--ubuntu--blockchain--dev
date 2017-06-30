@@ -177,7 +177,7 @@ time wget https://github.com/Microsoft/team-explorer-everywhere/releases/downloa
 time sudo -H -u $AZUREUSER bash -c 'unzip TEE-CLC-14.120.0.zip -d $HOME/bin'
 # set PATH and clean up
 time sudo -H -u $AZUREUSER bash -c "echo 'PATH=\"\$PATH:\"$HOME/bin/TEE-CLC-14.120.0/\"' >> .profile"
-time sudo -H -u $AZUREUSER bash -c 'tf eula -accept'
+time sudo -H -u $AZUREUSER bash -c '$HOME/bin/TEE-CLC-14.120.0/tf eula -accept'
 # create VSCode TF user settings
 time sudo mkdir $HOMEDIR/.Configs/Code
 time sudo mkdir $HOMEDIR/.Configs/Code/User
