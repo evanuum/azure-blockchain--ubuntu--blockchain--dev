@@ -207,6 +207,48 @@
             }
         },
         {
+           "type": "",
+           "name": "shutdown-computevm-bcdev",
+           "apiVersion": "2016-05-15",
+           "location": "[resourceGroup().location]",
+           "dependsOn": [
+               "[concat('Microsoft.Compute/virtualMachines/', parameters('virtualMachineName'))]"
+           ],
+           "properties": {
+               "status": "Enabled",
+               "taskType": "ComputeVmShutdownTask",
+               "dailyRecurrence": {
+                   "time": "1900"
+               },
+               "timeZoneId": "W. Europe Standard Time",
+               "notificationSettings": {
+                   "status": "Disabled"
+               },
+               "targetResourceId": "[resourceId('Microsoft.Compute/virtualMachines', parameters('virtualMachineName'))]"
+           }
+        },
+        {
+           "type": "",
+           "name": "autostart-computevm-bcdev",
+           "apiVersion": "2016-05-15",
+           "location": "[resourceGroup().location]",
+           "dependsOn": [
+               "[concat('Microsoft.Compute/virtualMachines/', parameters('virtualMachineName'))]"
+           ],
+           "properties": {
+               "status": "Enabled",
+               "taskType": "ComputeVmAutoStart",
+               "dailyRecurrence": {
+                   "time": "0700"
+               },
+               "timeZoneId": "W. Europe Standard Time",
+               "notificationSettings": {
+                   "status": "Disabled"
+               },
+               "targetResourceId": "[resourceId('Microsoft.Compute/virtualMachines', parameters('virtualMachineName'))]"
+           }
+        },
+        {
             "type": "Microsoft.Compute/virtualMachines/extensions",
             "name": "[concat(parameters('virtualMachineName'),'/installcustomscript')]",
             "apiVersion": "2016-03-30",

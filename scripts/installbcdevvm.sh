@@ -3,8 +3,8 @@
 # print commands and arguments as they are executed
 set -x
 
-echo "Start setup"
-echo "starting ubuntu blockchain devbox install on pid $$"
+####################################################
+echo "Start setup Ubuntu Blockchain Development VM"
 date
 
 #############
@@ -18,65 +18,20 @@ echo "User: $AZUREUSER"
 echo "User home dir: $HOMEDIR"
 echo "vmname: $VMNAME"
 
-# install ubuntu-desktop
+#########################
+# Install ubuntu-desktop
+#########################
 
-###################
-# Common Functions
-###################
-
-ensureAzureNetwork()
-{
-  # ensure the host name is resolvable
-  hostResolveHealthy=1
-  for i in {1..120}; do
-    host $VMNAME
-    if [ $? -eq 0 ]
-    then
-      # hostname has been found continue
-      hostResolveHealthy=0
-      echo "the host name resolves"
-      break
-    fi
-    sleep 1
-  done
-  if [ $hostResolveHealthy -ne 0 ]
-  then
-    echo "host name does not resolve, aborting install"
-    exit 1
-  fi
-
-  # ensure the network works
-  networkHealthy=1
-  for i in {1..12}; do
-    wget -O/dev/null http://bing.com
-    if [ $? -eq 0 ]
-    then
-      # hostname has been found continue
-      networkHealthy=0
-      echo "the network is healthy"
-      break
-    fi
-    sleep 10
-  done
-  if [ $networkHealthy -ne 0 ]
-  then
-    echo "the network is not healthy, aborting install"
-    ifconfig
-    ip a
-    exit 2
-  fi
-}
-ensureAzureNetwork
 
 ###################################################
 # Update Ubuntu and install all necessary binaries
 ###################################################
 
 time sudo apt-get -y update
-# kill the waagent and uninstall, otherwise, adding the desktop will do this and kill this script
+# kill the waagent
 sudo pkill waagent
-# sudo dpkg --configure -a
-# install nodejs 
+sudo dpkg --configure -a
+# install desktop and nodejs
 time sudo DEBIAN_FRONTEND=noninteractive apt-get -y install ubuntu-desktop vnc4server ntp nodejs npm expect gnome-panel gnome-settings-daemon metacity nautilus gnome-terminal gnome-core
 
 #########################################
@@ -91,9 +46,11 @@ echo "vncserver -geometry 1280x960 -depth 16" | sudo tee $HOMEDIR/bin/startvnc
 echo "vncserver -kill :1" | sudo tee $HOMEDIR/bin/stopvnc
 echo "export PATH=\$PATH:~/bin" | sudo tee -a $HOMEDIR/.bashrc
 
+#######################
+# Set password for VNC
+#######################
 prog=/usr/bin/vncpasswd
 mypass=$3
-
 sudo -i -u $AZUREUSER /usr/bin/expect <<EOF
 spawn "$prog"
 expect "Password:"
@@ -104,9 +61,15 @@ expect eof
 exit
 EOF
 
+#############################################
+# Start and stop VNC to create settings file
+#############################################
 sudo -i -u $AZUREUSER startvnc
 sudo -i -u $AZUREUSER stopvnc
 
+#############################
+# Recreate VNC settings file
+#############################
 echo "#!/bin/sh" | sudo tee $HOMEDIR/.vnc/xstartup
 echo "" | sudo tee -a $HOMEDIR/.vnc/xstartup
 echo "export XKL_XMODMAP_DISABLE=1" | sudo tee -a $HOMEDIR/.vnc/xstartup
@@ -126,9 +89,9 @@ echo "gnome-terminal &" | sudo tee -a $HOMEDIR/.vnc/xstartup
 
 sudo -i -u $AZUREUSER $HOMEDIR/bin/startvnc
 
-######
-# install visual studio code
-######
+#############################
+# Install Visual Studio Code
+#############################
 sudo add-apt-repository -y "deb https://packages.microsoft.com/repos/vscode stable main"
 sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys EB3E94ADBE1229CF
 time sudo apt update -y
@@ -141,9 +104,9 @@ time sudo -H -u $AZUREUSER bash -c 'code --install-extension PKief.material-icon
 time sudo -H -u $AZUREUSER bash -c 'code --install-extension ms-vsts.team'
 date
 
-######
-#install testrpc & truffle
-######
+############################
+# Install Testrpc & Truffle
+############################
 # install the basics
 curl -sL https://deb.nodesource.com/setup_7.x | sudo -E bash
 sudo apt-get update -y && sudo apt-get upgrade -y 
@@ -157,9 +120,9 @@ sudo npm install -g ethereumjs-testrpc@beta
 time sudo -H -u $AZUREUSER bash -c 'bash <(curl https://raw.githubusercontent.com/paritytech/scripts/master/get-parity.sh -Lk)'
 date
 
-####################
+###############
 # Setup Chrome
-####################
+###############
 cd /tmp
 time wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
 time sudo dpkg -i google-chrome-stable_current_amd64.deb
@@ -167,9 +130,9 @@ time sudo apt-get -f -y install
 time rm /tmp/google-chrome-stable_current_amd64.deb
 date
 
-##########
+#######################################################################################
 # Install Team Explorer Everywhere Command Line Client (version 14.120.0.201706271643)
-##########
+#######################################################################################
 # install JAVA
 time sudo apt-get -y install default-jre
 # get TEE
@@ -185,6 +148,5 @@ echo "}" | sudo tee -a $HOMEDIR/.config/Code/User/settings.json
 time rm TEE-CLC-14.120.0.zip
 date
 
-# end of install
-echo "completed ubuntu devbox install on pid $$"
+#####################
 echo "Setup Complete"
