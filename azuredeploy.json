@@ -207,7 +207,7 @@
             }
         },
         {
-           "type": "",
+           "type": "Microsoft.DevTestLab/schedules",
            "name": "shutdown-computevm-bcdev",
            "apiVersion": "2016-05-15",
            "location": "[resourceGroup().location]",
@@ -228,7 +228,7 @@
            }
         },
         {
-           "type": "",
+           "type": "Microsoft.DevTestLab/schedules",
            "name": "autostart-computevm-bcdev",
            "apiVersion": "2016-05-15",
            "location": "[resourceGroup().location]",
