@@ -9,7 +9,7 @@ For authentication to VSTS a personal access token can be used. Set up of such a
 <a href="http://armviz.io/#/?load=https://raw.githubusercontent.com/evanuum/azure-blockchain--ubuntu--blockchain--dev/master/azuredeploy.json" target="_blank">
     <img src="http://armviz.io/visualizebutton.png"/>
 </a>
-<p>The solitdity and material icon extension are installed as well for easy blockchain development.
+<p>The solitdity, VSTS and material icon extension need to be installed manually for easy blockchain development.
 <img src='/images/VScode.PNG' />
 The install sh script is executed in the background and therefore it will take some time for it to finish even though Azure informs you the ARM template deployment has completed. Execute the "tail /var/log/initial-install.log" on a ssh shell to see what the status is. If you see the statement "Setup Complete" as the last statement in the log file the install has finished completely.</p>
 <H2>SSH tunnel for VNC</H2>
